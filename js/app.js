@@ -1,16 +1,23 @@
 /// SETUP OSC ///
 var monoSynth = new Tone.MonoSynth({
-    "filter" : {
-        "type" : "lowpass",
-        "Q" : 7
-    },
+
     "filterEnvelope" : {
         "attack" : 0.02,
         "decay" : 0.1,
         "sustain" : 0.2,
         "release" : 0.9,
+    },
+    oscillator:{
+    type:"sawtooth"
     }
 }).toMaster();
+
+var pingPong = new Tone.PingPongDelay("16n", 0.8).toMaster();
+var freeverb = new Tone.Freeverb().toMaster();
+
+console.log(monoSynth);
+
+//monoSynth.connect(freeverb);
 
 Tone.Master.volume.rampTo(0, 0.05);
 
@@ -18,23 +25,27 @@ nx.onload = function() {
   nx.colorize("#00CCFF"); // sets accent (default)
 
 
+  filter.on('*', function(data){
+    monoSynth.filter.frequency = data.value;
+
+  });
   attack.on("*", function(data){
-    monoSynth.filterEnvelope.attack = data.value;
+    monoSynth.envelope.attack = data.value;
   });
   decay.on("*", function(data){
-    monoSynth.filterEnvelope.decay = data.value;
+    monoSynth.envelope.decay = data.value;
   });
   sustain.on("*", function(data){
-    monoSynth.filterEnvelope.sustain = data.value;
+    monoSynth.envelope.sustain = data.value;
   });
   release.on("*", function(data){
-    monoSynth.filterEnvelope.release = data.value;
+    monoSynth.envelope.release = data.value;
   });
   keyboard.on("*", function(data){
-    console.log(convertMIDI(data.note))
     if(data.on > 0)
-      monoSynth.triggerAttackRelease(convertMIDI(data.note), "4n");
-
+      monoSynth.triggerAttack(convertMIDI(data.note));
+    else
+      monoSynth.triggerRelease();
   });
 
 
