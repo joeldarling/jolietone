@@ -1,0 +1,25 @@
+body {
+  background-color: #00b388;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 16px;
+}
+
+
+h3 {
+  font-size: 40px;
+}
+.title {
+  font-size:  150px;
+  text-align: center;
+}
+
+.module {
+  text-align: center;
+
+}
+
+.kbd {
+  text-align: center;
+  margin-top: 240px;
+}

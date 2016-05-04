@@ -1,23 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <title>JoeliTone</title>
 
-      <!-- <link href="/stylesheets/styles.css" rel="stylesheet" /> -->
-      <script src="js/nexusUI.js"></script>
-      <script src="js/Tone.js"></script>
-      <script src="js/app.js"></script>
-
-
-  </head>
-  <body style="text-align:center;background-color:#eee">
-    <canvas nx="dial" min="20" max="700" id="filter" label="Filter Cutoff"></canvas>
-    <canvas nx="slider" id="attack" label="A"></canvas>
-    <canvas nx="slider" id="decay" label="D"></canvas>
-    <canvas nx="slider" id="sustain" label="S"></canvas>
-    <canvas nx="slider" id="release" label="R"></canvas>
-    <canvas nx="keyboard" id="keyboard"></canvas>
+<head>
+    <title>JoeliTone</title>
+    <link href="stylesheets/bootstrap.css" rel="stylesheet" />
+    <link href="stylesheets/styles.css" rel="stylesheet" />
+    <script src="js/nexusUI.js"></script>
+    <script src="js/Tone.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/app.js"></script>
 
 
-  </body>
+</head>
+
+<body>
+    <div class="container">
+        <h3 class="title">JoliTone</h3>
+        <div class="row">
+            <div class="col-sm-2">
+                <h3> VCO </h3>
+                <canvas nx="tabs"></canvas>
+
+
+            </div>
+            <div class="col-sm-2 module">
+                <h3> ADSR </h3>
+                <canvas nx="slider" min="0" max="2" id="attack" label="A"></canvas>
+                <canvas nx="slider" min="0" max="2" id="decay" label="D"></canvas>
+                <canvas nx="slider" min="0" max="2" id="sustain" label="S"></canvas>
+                <canvas nx="slider" min="0" max="2" id="release" label="R"></canvas>
+            </div>
+            <div class="col-sm-2 module">
+                <h3> CHRS </h3>
+                <canvas nx="dial" id="chrs" label="depth"></canvas>
+
+            </div>
+            <div class="col-sm-2 module">
+                <h3> RVB </h3>
+
+                <canvas nx="dial" id="rvbAmt" label="amt"></canvas>
+
+            </div>
+            <div class="col-sm-2 module">
+                <h3> DLY </h3>
+
+                <canvas nx="dial" id="dlyAmt" label="amt"></canvas>
+            </div>
+            <div class="col-sm-2 module">
+                <h3> VCA </h3>
+                <canvas nx="dial" id="volume" ></canvas>
+
+            </div>
+
+            <div class="row kbd">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <h3> KBD </h3>
+
+                    <canvas nx="keyboard" id="keyboard"></canvas>
+                </div>
+                <div class="col-sm-4"></div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
 </html>
