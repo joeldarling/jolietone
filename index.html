@@ -7,7 +7,6 @@
     <link href="stylesheets/styles.css" rel="stylesheet" />
     <script src="js/nexusUI.js"></script>
     <script src="js/Tone.js"></script>
-    <script src="js/angular.js"></script>
     <script src="js/app.js"></script>
 
 
@@ -15,7 +14,7 @@
 
 <body>
     <div class="container">
-        <h3 class="title">JoliTone</h3>
+        <h3 class="title">JolieTone</h3>
         <div class="row">
             <div class="col-sm-2">
                 <h3> VCO </h3>
@@ -30,11 +29,7 @@
                 <canvas nx="slider" min="0" max="2" id="sustain" label="S"></canvas>
                 <canvas nx="slider" min="0" max="2" id="release" label="R"></canvas>
             </div>
-            <div class="col-sm-2 module">
-                <h3> CHRS </h3>
-                <canvas nx="dial" id="chrs" label="depth"></canvas>
 
-            </div>
             <div class="col-sm-2 module">
                 <h3> RVB </h3>
 
@@ -47,8 +42,13 @@
                 <canvas nx="dial" id="dlyAmt" label="amt"></canvas>
             </div>
             <div class="col-sm-2 module">
+                <h3> DIST </h3>
+                <canvas nx="toggle" id="dist"></canvas>
+
+            </div>
+            <div class="col-sm-2 module">
                 <h3> VCA </h3>
-                <canvas nx="dial" id="volume" ></canvas>
+                <canvas min="-36" max="0" width="60%" nx="slider" id="volume" ></canvas>
 
             </div>
 
@@ -57,7 +57,7 @@
                 <div class="col-sm-4">
                     <h3> KBD </h3>
 
-                    <canvas nx="keyboard" id="keyboard"></canvas>
+                    <canvas width="400px" hight="200px" nx="keyboard" id="keyboard"></canvas>
                 </div>
                 <div class="col-sm-4"></div>
 
