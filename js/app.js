@@ -1,53 +1,3 @@
-/// SETUP MIDI ///
-
-// request MIDI access
-if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess({
-        sysex: false // this defaults to 'false' and we won't be covering sysex in this article.
-    }).then(onMIDISuccess, onMIDIFailure);
-} else {
-    alert("No MIDI support in your browser.");
-}
-
-// midi functions
-function onMIDISuccess(midiAccess) {
-  // when we get a succesful response, run this code
-  var midi = midiAccess; // this is our raw MIDI data, inputs, outputs, and sysex status
-
-  var inputs = midi.inputs.values();
-  // loop over all available inputs and listen for any MIDI input
-  for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
-      // each time there is a midi message call the onMIDIMessage function
-      input.value.onmidimessage = onMIDIMessage;
-      console.log(input)
-      listInputs(input);
-
-  }
-
-  midi.onstatechange = onStateChange;
-
-}
-
-function listInputs(inputs) {
-    var input = inputs.value;
-    console.log("Input port : [ type:'" + input.type + "' id: '" + input.id +
-        "' manufacturer: '" + input.manufacturer + "' name: '" + input.name +
-        "' version: '" + input.version + "']");
-}
-
-function onStateChange(message){
-  console.log('message')
-}
-
-function onMIDIMessage(message) {
-    var data = message.data; // this gives us our [command/channel, note, velocity] data.
-    console.log('MIDI data', data); // MIDI data [144, 63, 73]
-}
-
-function onMIDIFailure(e) {
-    // when we get a failed response, run this code
-    console.log("No access to MIDI devices or your browser doesn't support WebMIDI API. Please use WebMIDIAPIShim " + e);
-}
 
 /// SETUP OSC ///
 var monoSynth = new Tone.MonoSynth({
@@ -98,33 +48,25 @@ nx.onload = function() {
 
   /// ADSR ///
   attack.on("*", function(data){
-    monoSynth.envelope.attack = data.value;
+    monoSynth.envelope.set({'attack': data.value});
   });
   decay.on("*", function(data){
-    monoSynth.envelope.decay = data.value;
+    monoSynth.envelope.set({'decay': data.value});
   });
   sustain.on("*", function(data){
-    monoSynth.envelope.sustain = data.value;
+    monoSynth.envelope.set({'sustain': data.value});
   });
   release.on("*", function(data){
-    monoSynth.envelope.release = data.value;
+    monoSynth.envelope.set({'release': data.value});
   });
 
   /// FLTR ///
   dist.on("*", function(data){
 
     if (+data.value === 1) {
-      console.log('enable', distort.get());
       distort.set({wet: 1});
-      console.log('enable', distort.get());
-
     } else{
-      console.log('disnable', distort.get());
-
       distort.set({wet: 0});
-      console.log('disnable', distort.get());
-
-
     }
   });
 
@@ -148,19 +90,30 @@ nx.onload = function() {
   //KBD
   keyboard.on("*", function(data){
     if(data.on > 0)
-      monoSynth.triggerAttack(convertMIDI(data.note));
+      playNote(convertMIDI(data.note));
     else
-      monoSynth.triggerRelease();
+      stopNote();
   });
 
 
 };
 
+var playNote = function(note, vel){
+
+  vel = vel / 128;
+
+  monoSynth.triggerAttack(note);
+}
+
+var stopNote = function(){
+  monoSynth.triggerRelease();
+
+}
 var initControls = function(){
 
   //VCO
   tabs1.options = ['sine','saw','square'];
-  tabs1.choice = 0;
+  tabs1.choice = 2;
   tabs1.init();
   tabs1.draw();
 
