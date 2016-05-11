@@ -16,12 +16,12 @@ var monoSynth = new Tone.MonoSynth({
     }
 }).toMaster();
 
+var monoSynth = new Tone.MonoSynth().toMaster();
+
 /// INIT FX ///
 var pingPong = new Tone.PingPongDelay("16n", 0.5).toMaster();
 var freeverb = new Tone.Freeverb({ "wet": 0 }).toMaster();
 var distort = new Tone.Distortion(0.8).toMaster();
-
-
 
 /// connect to synth ///
 monoSynth.connect(pingPong);
